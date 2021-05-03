@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_restful import Api,Resource,reqparse
 from flask_cors import CORS,cross_origin
+from pdpipeline import createRaster
+
 
 
 
@@ -11,12 +13,13 @@ CORS(app)
 
 #CORS(app,resorces={r'/*': {"origins": '*'}})
 pdal_args=reqparse.RequestParser()
-pdal_args.add_argument("name",type=str,help="name whatever")
+pdal_args.add_argument("wkt",type=str,help="extent of clip polygon")
 
 class PdalResourse(Resource):
     def get(self):
         args=pdal_args.parse_args()
-        return{"data":"hi there","name":args}
+        rasterurl=createRaster(args)
+        return{"data":"hi there","url":rasterurl}
 
 
 api.add_resource(PdalResourse,"/pdal")
