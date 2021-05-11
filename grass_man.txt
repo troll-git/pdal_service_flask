@@ -1,0 +1,18 @@
+
+#create mapset
+grass78 -e -c EPSG:4326 /home/marek/pdal_service_flask/data/mapset
+
+#import tiff file to mapset
+grass78 /home/marek/pdal_service_flask/data/mapset/PERMANENT/ -e -c --exec r.import input=data/parkh.tif output=parkinght
+#set gregion from raster (for band 1)
+grass78 /home/marek/pdal_service_flask/data/mapset/PERMANENT/ -e -c --exec g.region -ap raster=parkinght.1
+
+#print raster stats
+grass78 /home/marek/pdal_service_flask/data/mapset/PERMANENT/ -e -c --exec r.univar map=parkinght.1
+
+#make sun map
+grass78 /home/marek/pdal_service_flask/data/mapset/PERMANENT/ -c -e --exec r.sunmask -g parkinght.1 year=2021 month=2 day=22 hour=14 minute=30 timezone=+2 output=shademap --overwrite
+
+#export map to tiff
+grass78 /home/marek/pdal_service_flask/data/mapset/PERMANENT/ --exec r.out.gdal input=shademap output='data/shademap_parking.tif'
+grass78 /home/marek/pdal_service_flask/data/mapset/PERMANENT/ --exec r.out.gdal input=stadion.1 output='data/park1.tif'
