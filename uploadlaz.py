@@ -20,8 +20,8 @@ def uploadtopg(filename):
         },
         {
             "type":"writers.pgpointcloud",
-            "connection":"host='localhost' dbname='pointclouds' user='postgres' password='postgres' port='5432'",
-            "table":"sthsm3",
+            "connection":"host='159.65.197.227' dbname='pointclouds' user='postgres' password='gunt1234' port='5433'",
+            "table":"Oslo2019",
             "compression":"dimensional",
             "column": "points",
             "srid":"25832"
@@ -31,12 +31,13 @@ def uploadtopg(filename):
 
     pipeline = pdal.Pipeline(json.dumps(jyson))
     count = pipeline.execute()
-    arrays = pipeline.arrays
-    metadata = pipeline.metadata
-    log = pipeline.log
+    #arrays = pipeline.arrays
+    #metadata = pipeline.metadata
+    #log = pipeline.log
 
 directory="/home/marek/Downloads/eksport_438613_20210504/1174/data"
-for filename in os.listdir(directory):
+length=len(os.listdir(directory))
+for index,filename in enumerate(os.listdir(directory)):
     newfile=os.path.join(directory,filename)
-    print ('uploading: '+filename)
+    print ('uploading: {} ,{} of {}'.format(filename,index+1,length))
     uploadtopg(newfile)

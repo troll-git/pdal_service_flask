@@ -26,13 +26,13 @@ def createRaster(wkt):
         "type":"filters.crop",
         "polygon":polygon
    },
- #   {
- #       "type":"filters.hag_nn"
- #   },
- #   {
- #       "type":"filters.ferry",
- #       "dimensions":"HeightAboveGround=>Z"
- #   },
+    {
+        "type":"filters.hag_nn"
+    },
+    {
+        "type":"filters.ferry",
+        "dimensions":"HeightAboveGround=>Z"
+    },
  #   {
  #       "type":"writers.las",
  #       "filename":filelas
@@ -44,7 +44,7 @@ def createRaster(wkt):
  #   },
     {
     "type": "writers.gdal",
-    "resolution":1,
+    "resolution":+0.25,
     "radius": 0.5,
     "filename":fileras,
 
@@ -61,7 +61,7 @@ def createRaster(wkt):
 
     input_raster = gdal.Open(fileras)
     warp = gdal.Warp(fileras84,input_raster,dstSRS='EPSG:4326')
-    createShademap(fileras84,shademap)
+    #createShademap(fileras84,shademap)
     return fileras84
 '''
     with rasterio.open(fileras) as src:

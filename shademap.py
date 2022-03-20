@@ -23,4 +23,4 @@ def createShademap(infile,outfile):
     
     shutil.rmtree('/home/marek/pdal_service_flask/data/temp')
 
-createShademap('data/res.tif','data/outf.tif')
+#createShademap('data/res.tif','data/outf.tif')
